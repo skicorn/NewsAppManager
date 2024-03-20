@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Add_New_Category_Activity"
+    android:orientation="vertical"
+    android:gravity="center">
+    <EditText
+        android:id="@+id/admin_category_getname"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:background="@drawable/edittext_border"
+        android:hint="ENTER YOUR CATEGORY"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/black"/>
+    <Button
+        android:id="@+id/admin_category_create"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/edittext_border"
+        android:text="SUBMIT"
+        android:layout_marginTop="30dp"/>
+</LinearLayout>
