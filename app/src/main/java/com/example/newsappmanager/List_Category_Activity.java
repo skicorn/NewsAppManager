@@ -4,15 +4,20 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethod;
@@ -36,12 +41,11 @@ public class List_Category_Activity extends AppCompatActivity {
     FirebaseFirestore db;
     //Android
     RecyclerView recyclerView;
-    EditText categoryname;
     //object
     ArrayList<Category> categories;
-    Button btn_add;
     Category category;
-
+    Dialog bar;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +55,13 @@ public class List_Category_Activity extends AppCompatActivity {
         //get db
         categories = new ArrayList<>();
         recyclerView = findViewById(R.id.admin_list_category);
-        btn_add = findViewById(R.id.admin_addcategory);
+        bar = new Dialog(List_Category_Activity.this, R.style.dialog);
+        bar.setContentView(R.layout.processbar);
+        bar.setCanceledOnTouchOutside(false);
         getCatefromFirestore(categories);
-        //clear screen
+        //toolbar
+        toolbar = findViewById(R.id.listcategory_topmenu);
+        setSupportActionBar(toolbar);
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -65,15 +73,15 @@ public class List_Category_Activity extends AppCompatActivity {
                 return false;
             }
         });
-        btn_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(List_Category_Activity.this, Add_New_Category_Activity.class);
-                startActivity(i);
-            }
-        });
+    }
+    private void showProgress(){
+        bar.show();
+    }
+    private void endProgress(){
+        bar.dismiss();
     }
     private void getCatefromFirestore(ArrayList<Category> categories1){
+        showProgress();
         db.collection("category")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -87,14 +95,35 @@ public class List_Category_Activity extends AppCompatActivity {
                                 cate.setCateName(data.get("cateName").toString());
                                 categories1.add(cate);
                             }
+                            endProgress();
                             CategoryList_Adapter adapter = new CategoryList_Adapter(categories);
                             recyclerView.setLayoutManager(new LinearLayoutManager(List_Category_Activity.this));
                             recyclerView.addItemDecoration(new DividerItemDecoration(List_Category_Activity.this, LinearLayoutManager.VERTICAL));
                             recyclerView.setAdapter(adapter);
                         }else {
+                            endProgress();
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.topmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==android.R.id.home){
+            finish();
+        }
+        if (item.getItemId()==R.id.menu_add){
+            Intent i = new Intent(List_Category_Activity.this, Add_New_Category_Activity.class);
+            startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -7,12 +7,16 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,27 +40,38 @@ public class List_News_Activity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FirebaseFirestore db;
     private CollectionReference refer;
-    Button btn_add;
+    Dialog bar;
+//    Button btn_add,btn_back;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_news);
+        //firebase and classes
         news = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
         refer = db.collection("category");
+        //recycler view
         recyclerView = findViewById(R.id.admin_list_news);
+        //toolbar
+        toolbar = findViewById(R.id.listnew_topmenu);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("Quản lý tin tức");
+        //dialog
+        bar = new Dialog(List_News_Activity.this, R.style.dialog);
+        bar.setContentView(R.layout.processbar);
+        bar.setCanceledOnTouchOutside(false);
         getDataformFireStore(news);
-        btn_add = findViewById(R.id.admin_addnew);
-        btn_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(List_News_Activity.this, Add_News_Activity.class);
-                startActivity(i);
-            }
-        });
+    }
+    private void showProgress(){
+        bar.show();
+    }
+    private void endProgress(){
+        bar.dismiss();
     }
     void getDataformFireStore(ArrayList<News> news1) {
+        showProgress();
         db.collection("news")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -82,16 +97,38 @@ public class List_News_Activity extends AppCompatActivity {
                                 objnews.setCategory(getCate(data.get("news_cate").toString(), objnews));
                                 news1.add(objnews);
                             }
+                            endProgress();
                             NewContext_Adapter adapter = new NewContext_Adapter(news);
                             recyclerView.setLayoutManager(new LinearLayoutManager(List_News_Activity.this));
                             recyclerView.addItemDecoration(new DividerItemDecoration(List_News_Activity.this, LinearLayoutManager.VERTICAL));
                             recyclerView.setAdapter(adapter);
                         } else {
+                            endProgress();
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.topmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            finish();
+        }
+        if (item.getItemId()==R.id.menu_add){
+            Intent i = new Intent(List_News_Activity.this, Add_News_Activity.class);
+            startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private String getCate(String id, News news){
         db.collection("category").document(id)
                 .get()

@@ -5,14 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".admin.Show_News_Info_Activity">
+    tools:context=".Show_News_Info_Activity"
+    android:background="@color/cam">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:gravity="center">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/add_news_imgBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/baseline_arrow_back_ios_24"
+                android:layout_marginLeft="50dp"/>
+        </com.google.android.material.appbar.MaterialToolbar>
         <EditText
             android:id="@+id/admin_show_new_title"
             android:layout_width="300dp"
@@ -45,7 +57,8 @@
                 android:id="@+id/admin_show_update_img_button"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
-                android:text="UPLOAD" />
+                android:text="UPLOAD"
+                android:background="@drawable/edittext_border"/>
 
             <TextView
                 android:id="@+id/admin_show_update_imgname"
@@ -85,21 +98,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="50dp"
+            android:gravity="center">
 
             <Button
                 android:id="@+id/admin_show_button_update"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:text="UPDATE" />
+                android:text="UPDATE"
+                android:background="@drawable/edittext_border" />
 
             <Button
                 android:id="@+id/admin_show_button_delete"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="100dp"
-                android:text="DELETE" />
+                android:text="DELETE"
+                android:background="@drawable/edittext_border" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

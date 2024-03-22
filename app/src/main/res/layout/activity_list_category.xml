@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".List_Category_Activity">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/admin_list_category"
+    tools:context=".List_Category_Activity"
+    android:orientation="vertical">
+    <com.google.android.material.appbar.MaterialToolbar
+        android:background="@color/cam"
+        android:id="@+id/listcategory_topmenu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <Button
-        android:id="@+id/admin_addcategory"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/edittext_border"
-        android:text="ADD NEW"
-        android:textSize="20sp"/>
-</FrameLayout>
+        android:layout_height="wrap_content"
+        app:menu="@menu/topmenu"
+        app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
+        app:title="Quản lý danh mục"
+        app:titleCentered="true"/>
+
+   <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_weight="1">
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/admin_list_category"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"/>
+   </FrameLayout>
+</LinearLayout>

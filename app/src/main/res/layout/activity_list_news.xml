@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".List_News_Activity">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/admin_list_news"
+    tools:context=".List_News_Activity"
+    android:orientation="vertical">
+
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:background="@color/cam"
+        android:id="@+id/listnew_topmenu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <Button
-        android:id="@+id/admin_addnew"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/edittext_border"
-        android:text="ADD"
-        android:textSize="20sp"/>
-</FrameLayout>
+        android:layout_height="wrap_content"
+        app:menu="@menu/topmenu"
+        app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
+        app:title="Quản lý tin tức"
+        app:titleCentered="true"/>
+
+    <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_weight="1" >
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/admin_list_news"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"/>
+   </FrameLayout>
+</LinearLayout>

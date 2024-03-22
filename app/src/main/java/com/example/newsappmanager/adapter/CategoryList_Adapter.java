@@ -1,14 +1,21 @@
 package com.example.newsappmanager.adapter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsappmanager.List_Category_Activity;
@@ -25,7 +32,7 @@ public class CategoryList_Adapter extends RecyclerView.Adapter<CategoryList_Adap
     FirebaseFirestore db;
     ArrayList<Category> categories;
     String newName;
-    LayoutInflater inflater;
+    AlertDialog.Builder alertDialog;
 
     public CategoryList_Adapter(ArrayList<Category> categories) {
         this.categories = categories;
@@ -48,14 +55,22 @@ public class CategoryList_Adapter extends RecyclerView.Adapter<CategoryList_Adap
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus)
                 {
+                    holder.btn_save.setVisibility(View.VISIBLE);
                     holder.btn_save.setEnabled(true);
                 }
-                else    holder.btn_save.setEnabled(false);
+                else {
+                    holder.btn_save.setVisibility(View.INVISIBLE);
+                    holder.btn_save.setEnabled(false);
+                }
             }
         });
         if (holder.catename.hasFocus()){
+            holder.btn_save.setVisibility(View.VISIBLE);
             holder.btn_save.setEnabled(true);
-        } else holder.btn_save.setEnabled(false);
+        } else {
+            holder.btn_save.setVisibility(View.INVISIBLE);
+            holder.btn_save.setEnabled(false);
+        }
         holder.btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,10 +81,33 @@ public class CategoryList_Adapter extends RecyclerView.Adapter<CategoryList_Adap
         });
         holder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                deletefromFirestore(category, v);
+            public void onClick(View v)
+            {
+                showDelete(v, category);
             }
         });
+    }
+    private void showDelete(View view, Category category){
+        alertDialog = new AlertDialog.Builder(view.getContext());
+        alertDialog.setTitle("Are you sure to delete?");
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deletefromFirestore(category, view);
+                dialog.dismiss();
+                refresh( (Activity) view.getContext());
+            }
+        });
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
+    private void refresh(Activity activity){
+        activity.recreate();
     }
 
     @Override
@@ -111,7 +149,7 @@ public class CategoryList_Adapter extends RecyclerView.Adapter<CategoryList_Adap
                 });
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
-        Button btn_save,btn_delete;
+        ImageButton btn_save,btn_delete;
         EditText catename;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

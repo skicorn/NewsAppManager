@@ -44,7 +44,7 @@ public class NewContext_Adapter extends RecyclerView.Adapter<NewContext_Adapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         News news = arr_News.get(position);
         holder.title.setText(news.getTitle());
-        holder.user.setText(news.getUser());
+        holder.view.setText(news.getView() + " view");
         holder.time.setText(news.getTime());
         Picasso.get().load(news.getImage()).into(holder.image);;
         //add click listener
@@ -67,13 +67,13 @@ public class NewContext_Adapter extends RecyclerView.Adapter<NewContext_Adapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
-        TextView title, user, time;
+        TextView title, view, time;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
             image = itemView.findViewById(R.id.item_news_image);
             title = itemView.findViewById(R.id.item_main_title);
-            user = itemView.findViewById(R.id.item_main_poster);
+            view = itemView.findViewById(R.id.item_main_poster);
             time = itemView.findViewById(R.id.item_main_time);
         }
     }

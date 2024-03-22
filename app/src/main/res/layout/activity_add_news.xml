@@ -5,12 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Add_News_Activity">
+    tools:context=".Add_News_Activity"
+    android:background="@color/cam">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/add_news_imgBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/baseline_arrow_back_ios_24"
+                android:layout_marginLeft="50dp"/>
+        </com.google.android.material.appbar.MaterialToolbar>
         <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
@@ -44,7 +57,8 @@
                 android:id="@+id/add_news_image"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
-                android:text="UPLOAD" />
+                android:text="UPLOAD"
+                android:background="@drawable/edittext_border"/>
 
             <TextView
                 android:id="@+id/add_news_showIMGname"
@@ -87,6 +101,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:text="SUBMIT" />
+            android:text="SUBMIT"
+            android:background="@drawable/edittext_border"/>
     </LinearLayout>
 </ScrollView>

@@ -2,6 +2,7 @@ package com.example.newsappmanager;
 
 import static com.google.firebase.appcheck.internal.util.Logger.TAG;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newsappmanager.List_News_Activity;
@@ -47,6 +50,7 @@ public class Show_News_Info_Activity extends AppCompatActivity {
     EditText title, context;
     TextView imgName;
     ImageView img;
+    ImageButton btn_back;
     Spinner spinner;
     Button btn_update, btn_delete, btn_uploadIMG;
     Intent intent;
@@ -55,6 +59,7 @@ public class Show_News_Info_Activity extends AppCompatActivity {
     String filename1;
     int size;
     News news;
+    AlertDialog.Builder alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +67,7 @@ public class Show_News_Info_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_show_news_info);
         //get db
         db = FirebaseFirestore.getInstance();
-        ;
+        alertDialog = new AlertDialog.Builder(Show_News_Info_Activity.this);
         categories = new ArrayList<Category>();
         //find view
         title = findViewById(R.id.admin_show_new_title);
@@ -72,6 +77,7 @@ public class Show_News_Info_Activity extends AppCompatActivity {
         spinner = findViewById(R.id.admin_show_new_category);
         btn_delete = findViewById(R.id.admin_show_button_delete);
         btn_update = findViewById(R.id.admin_show_button_update);
+        btn_back = findViewById(R.id.add_news_imgBack);
         btn_uploadIMG = findViewById(R.id.admin_show_update_img_button);
         getCategory();
         //get intetnt
@@ -115,8 +121,13 @@ public class Show_News_Info_Activity extends AppCompatActivity {
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteIMG(news.getImageID());
-                deleteDocument(news.getId());
+                showDialog(news.getImageID(), news.getId());
+            }
+        });
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -247,6 +258,24 @@ public class Show_News_Info_Activity extends AppCompatActivity {
                         Toast.makeText(Show_News_Info_Activity.this, "DELETE FAILED", Toast.LENGTH_LONG).show();
                     }
                 });
-
+    }
+    private void showDialog(String imgID, String ID){
+        alertDialog.setTitle("ARE YOU SỦE TO DELETE?");
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteIMG(imgID);
+                deleteDocument(ID);
+                dialog.dismiss();
+            }
+        });
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(Show_News_Info_Activity.this, "DELETE CANCEL", Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 }

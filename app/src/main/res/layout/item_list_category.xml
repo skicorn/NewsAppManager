@@ -13,19 +13,24 @@
         android:background="@null"
         android:textSize="25sp"
         android:layout_marginStart="30dp"/>
-    <Button
+
+    <ImageButton
         android:id="@+id/admin_category_save"
-        android:layout_width="50dp"
+        android:layout_width="45dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginStart="20dp"
-        android:text="S"
-        android:enabled="false"/>
-    <Button
+        android:layout_marginStart="40dp"
+        android:background="@null"
+        android:enabled="false"
+        android:visibility="invisible"
+        android:src="@drawable/doneicon" />
+    <ImageButton
         android:id="@+id/admin_category_delete"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
-        android:text="D"/>
+        android:background="@drawable/edittext_border"
+        android:backgroundTint="@color/cam"
+        android:src="@drawable/deleteicoon"/>
 </LinearLayout>

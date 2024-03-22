@@ -13,6 +13,12 @@
         android:theme="@style/Theme.NewsAppManager"
         tools:targetApi="31">
         <activity
+            android:name=".List_User_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Show_User_Info_Activity"
+            android:exported="false" />
+        <activity
             android:name=".Add_New_Category_Activity"
             android:exported="false"
             android:label="@string/title_activity_add_new_category"

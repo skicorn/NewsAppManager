@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".Add_New_Category_Activity"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/cam">
     <EditText
         android:id="@+id/admin_category_getname"
         android:layout_width="300dp"

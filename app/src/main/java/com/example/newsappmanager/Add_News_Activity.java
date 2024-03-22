@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -58,6 +59,7 @@ public class Add_News_Activity extends AppCompatActivity {
     StorageReference storageReference;
     TextView title, context, IMGname;
     ImageView showIMGpreview;
+    ImageButton btn_back;
     Button chooseIMG, submit;
     Spinner spinner;
     Category_Adapter adapter;
@@ -76,6 +78,7 @@ public class Add_News_Activity extends AppCompatActivity {
         IMGname = findViewById(R.id.add_news_showIMGname);
         submit = findViewById(R.id.add_news_submit);
         showIMGpreview = findViewById(R.id.add_news_showIMG);
+        btn_back = findViewById(R.id.add_news_imgBack);
         categories = new ArrayList<>();
         spinner = findViewById(R.id.add_news_category);
         bar = new Dialog(Add_News_Activity.this, R.style.dialog);
@@ -108,6 +111,12 @@ public class Add_News_Activity extends AppCompatActivity {
                 if(checkEditText()==true) {
                     upLoadFiletoDB();
                 }
+            }
+        });
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
