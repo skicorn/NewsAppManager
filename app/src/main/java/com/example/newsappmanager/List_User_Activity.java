@@ -4,13 +4,18 @@ import static androidx.fragment.app.FragmentManager.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.newsappmanager.adapter.User_Adapter;
@@ -32,6 +37,8 @@ public class List_User_Activity extends AppCompatActivity {
     RecyclerView view;
     User_Adapter adapter;
     ArrayList<User> users;
+    Dialog bar;
+    Toolbar toolbar;
     User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +47,24 @@ public class List_User_Activity extends AppCompatActivity {
         //find view
         users = new ArrayList<>();
         view = findViewById(R.id.user_list);
+        toolbar = findViewById(R.id.user_bar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("Quản lý tin tức");
         //create db
         reference = FirebaseDatabase.getInstance().getReference().child("User");
+        bar = new Dialog(List_User_Activity.this, R.style.dialog);
+        bar.setContentView(R.layout.processbar);
+        bar.setCanceledOnTouchOutside(false);
         getUserList();
     }
+    private void showProgress(){
+        bar.show();
+    }
+    private void endProgress(){
+        bar.dismiss();
+    }
     public void getUserList(){
+        showProgress();
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -55,6 +75,7 @@ public class List_User_Activity extends AppCompatActivity {
                     user.setPassword(dataSnapshot.child("PassWord").getValue(String.class));
                     users.add(user);
                 }
+                endProgress();
                 adapter = new User_Adapter(users);
                 view.setLayoutManager(new LinearLayoutManager(List_User_Activity.this));
                 view.addItemDecoration(new DividerItemDecoration(List_User_Activity.this, LinearLayoutManager.VERTICAL));
@@ -62,8 +83,22 @@ public class List_User_Activity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.topmenu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
