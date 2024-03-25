@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:background="@color/cam"
         app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
-        app:title="Quản lý người dùng"
-        app:titleCentered="true" />
+        app:titleCentered="true"
+        app:title="@string/userHeader"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -260,13 +260,14 @@ public class Show_News_Info_Activity extends AppCompatActivity {
                 });
     }
     private void showDialog(String imgID, String ID){
-        alertDialog.setTitle("ARE YOU SỦE TO DELETE?");
+        alertDialog.setTitle("ARE YOU SURE TO DELETE?");
         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteIMG(imgID);
                 deleteDocument(ID);
                 dialog.dismiss();
+
             }
         });
         alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {

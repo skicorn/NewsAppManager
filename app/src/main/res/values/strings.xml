@@ -1,11 +1,12 @@
 <resources>
-    <string name="app_name">News App Manager</string>
+    <string name="app_name">Báo thủ Manager</string>
     <string name="title_activity_add_new_category">Add_New_Category_Activity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="userHeader">Sửa thông tin User</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

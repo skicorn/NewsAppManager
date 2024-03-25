@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -49,7 +50,6 @@ public class List_User_Activity extends AppCompatActivity {
         view = findViewById(R.id.user_list);
         toolbar = findViewById(R.id.user_bar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Quản lý tin tức");
         //create db
         reference = FirebaseDatabase.getInstance().getReference().child("User");
         bar = new Dialog(List_User_Activity.this, R.style.dialog);
@@ -97,8 +97,14 @@ public class List_User_Activity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==android.R.id.home){
-            finish();
+            Intent i = new Intent(List_User_Activity.this, MainActivity.class);
+            startActivity(i);
+        }
+        if (item.getItemId()==R.id.menu_add){
+            Intent i = new Intent(List_User_Activity.this, Add_User_Activity.class);
+            startActivity(i);
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
